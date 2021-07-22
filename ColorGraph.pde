@@ -10,15 +10,62 @@ void setup(){
 void draw(){
   background(150);
   drawGraph(width/2, height/2, -BOX_SIZE*0.7);
-  drawColor(1150, 50, 400, 100);
+  drawDimensions(50, 50, 400, 700);
+  drawColor(1150, 50, 400, 700);
+}
+
+void drawDimensions(float x, float y, float w, float h){
+  strokeWeight(1);
+  rect(x, y, w, h);
+  
+  float dimH = 100;
+  float margin = 60;
+  
+  // Red dimension
+  rect(x, y, w, dimH);
+  beginShape();
+  for(int i=0; i< 255; i++){
+    color c = getColor(i);
+    vertex(x+i*(w/255), y+dimH*(1-red(c)/255));
+  }
+  endShape();
+  
+  // Green dimension
+  rect(x, y+dimH+margin, w, dimH);
+  beginShape();
+  for(int i=0; i< 255; i++){
+    color c = getColor(i);
+    vertex(x+i*(w/255), y+dimH+margin+dimH*(1-green(c)/255));
+  }
+  endShape();
+  
+  // Blue dimension
+  rect(x, y+(dimH+margin)*2, w, dimH);
+  beginShape();
+  for(int i=0; i< 255; i++){
+    color c = getColor(i);
+    vertex(x+i*(w/255), y+(dimH+margin)*2+dimH*(1-blue(c)/255));
+  }
+  endShape();
+  
 }
 
 color getColor(float i){
     float r, g, b;
     
-    r = 127+sin(i/30)*127;
-    g = 127+sin(i/15)*127;
-    b = i;
+    float t = millis()/100;
+    float M = 255/2;
+    float P = TWO_PI/255;
+    
+    /*
+    r = M+M*sin(sin((i+t)*4*P)*i*P/2);
+    g = M+M*sin(-t/40+i*P);
+    b = M+M*sin(sin((i+t)*P)*i*P);
+    */
+    
+    r = M+M*sin(2*P*i);
+    g = M+M*sin(3*P*i);
+    b = M+M*sin(4*P*i);
     
     return color(r, g, b);
 }
@@ -134,7 +181,7 @@ void drawFunction(){
   strokeWeight(5);
   noFill();
   beginShape();
-  for(int i=0; i< 255; i++){
+  for(int i=0; i< 255+1; i++){
     color c = getColor(i);
     vertex(BOX_SIZE*red(c)/255, -BOX_SIZE*green(c)/255, BOX_SIZE*blue(c)/255);
   }
