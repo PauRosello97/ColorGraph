@@ -1,4 +1,4 @@
-int BOX_SIZE = 400;
+int BOX_SIZE = 500;
 int stepValue;
 float rotationX, rotationY;
 boolean fixedView = true;
@@ -9,8 +9,8 @@ void setup(){
 
 void draw(){
   background(150);
-  drawGraph();
-  drawColor(1100, 100, 400, 100);
+  drawGraph(width/2, height/2, -BOX_SIZE*0.7);
+  drawColor(1150, 50, 400, 100);
 }
 
 color getColor(float i){
@@ -35,14 +35,14 @@ void drawColor(float x, float y, float w, float h){
   rect(x, y, w, h);
 }
 
-void drawGraph(){
+void drawGraph(float x, float y, float z){
   if(!fixedView){
     rotationX = -mouseY/40.0;
     rotationY = mouseX/40.0;
   }
   
   pushMatrix();
-  translate(BOX_SIZE*1.7, BOX_SIZE, -BOX_SIZE*0.7);
+  translate(x, y, z);
   rotateX(rotationX);
   rotateY(rotationY);
   translate(-BOX_SIZE/2, BOX_SIZE/2, -BOX_SIZE/2);
@@ -83,6 +83,48 @@ void drawBox(){
   pushMatrix();
   translate(BOX_SIZE,0,0);
   fill(255, 0, 0);
+  sphere(20);
+  popMatrix();
+  
+  // Green
+  pushMatrix();
+  translate(0,-BOX_SIZE,0);
+  fill(0, 255, 0);
+  sphere(20);
+  popMatrix();
+  
+  // Blue
+  pushMatrix();
+  translate(0,0,BOX_SIZE);
+  fill(0, 0, 255);
+  sphere(20);
+  popMatrix();
+  
+  // Magenta
+  pushMatrix();
+  translate(BOX_SIZE,0,BOX_SIZE);
+  fill(255, 0, 255);
+  sphere(20);
+  popMatrix();
+  
+  // Yellow
+  pushMatrix();
+  translate(BOX_SIZE, -BOX_SIZE, 0);
+  fill(255, 255, 0);
+  sphere(20);
+  popMatrix();
+  
+  // Cyan
+  pushMatrix();
+  translate(0, -BOX_SIZE, BOX_SIZE);
+  fill(0, 255, 255);
+  sphere(20);
+  popMatrix();
+  
+  // White
+  pushMatrix();
+  translate(BOX_SIZE, -BOX_SIZE, BOX_SIZE);
+  fill(255, 255, 255);
   sphere(20);
   popMatrix();
 }
