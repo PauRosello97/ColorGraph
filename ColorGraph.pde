@@ -4,7 +4,7 @@ float rotationX, rotationY;
 boolean fixedView = true;
 
 void setup(){
-  size(1600, 800, P3D); 
+  size(1600, 900, P3D); 
 }
 
 void draw(){
@@ -53,19 +53,15 @@ void drawDimensions(float x, float y, float w, float h){
 color getColor(float i){
     float r, g, b;
     
-    float t = millis()/100;
-    float M = 255/2;
-    float P = TWO_PI/255;
+    float A = 255; // Amplitude
+    float t = millis()/100; // Time
+    float M = A/2; // Center point
+    float P = TWO_PI/255; // Period
     
-    /*
-    r = M+M*sin(sin((i+t)*4*P)*i*P/2);
-    g = M+M*sin(-t/40+i*P);
-    b = M+M*sin(sin((i+t)*P)*i*P);
-    */
+    r = M+M*sin((t/5+i)*P*sin(t*P));
+    g = M+M*sin(t*P/2+i*P*2*sin(M*sin(t*P)*i*P/300));
+    b =M+M*sin(P*sin(t*P)+10+i*P*3*sin(t*P/5));
     
-    r = M+M*sin(2*P*i);
-    g = M+M*sin(3*P*i);
-    b = M+M*sin(4*P*i);
     
     return color(r, g, b);
 }
@@ -192,4 +188,12 @@ void keyPressed() {
   if(keyCode == 32){
       fixedView = !fixedView;
   }
+}
+
+void mouseClicked(){
+  fixedView = true;
+}
+
+void mouseReleased(){
+  fixedView = false;
 }
