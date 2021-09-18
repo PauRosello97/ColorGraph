@@ -50,18 +50,24 @@ void drawDimensions(float x, float y, float w, float h){
   
 }
 
+float cubicPulse( float c, float w, float x ){
+    x = abs(x - c);
+    if( x>w ) return 0.0;
+    x /= w;
+    return 1.0 - x*x*(3.0-2.0*x);
+}
+
 color getColor(float i){
     float r, g, b;
     
     float A = 255; // Amplitude
-    float t = millis()/100; // Time
+    float t = millis()/1000.0; // Time
     float M = A/2; // Center point
     float P = TWO_PI/255; // Period
     
-    r = M+M*sin((t/5+i)*P*sin(t*P));
-    g = M+M*sin(t*P/2+i*P*2*sin(M*sin(t*P)*i*P/300));
-    b =M+M*sin(P*sin(t*P)+10+i*P*3*sin(t*P/5));
-    
+    r=M+M*sin(i*P)+i;
+    g=M+M*sin(i*P);
+    b=M+M*sin(i*P)+A-i;
     
     return color(r, g, b);
 }
